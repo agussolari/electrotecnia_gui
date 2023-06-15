@@ -1,34 +1,53 @@
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import uic
+import matplotlib.pyplot as plt
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
+from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
+
+
+import gui_functions as gf
+import mplwidget as mpl
+import input_signals as isig
+import function_plot as fplt
+
+
+
+app: QApplication = QApplication([])  # Start the application
+print("Application started")
 
 
 class gui(QMainWindow):
+
     def __init__(self):
-        super(gui, self).__init__()
+        super().__init__()
         uic.loadUi("gui.ui", self)
         self.show()
 
+        self.connect_signals()
+
+
+
+
+    def connect_signals(self):
         #When the button is clicked, show me the combo box value
-        self.radioButton.toggled.connect(self.on_radioButton_toggled)
-        self.radioButton_2.toggled.connect(self.on_radioButton_2_toggled)
+        self.primerOrden_button.toggled.connect(lambda: gf.filtro_button_toggled(self, self.primerOrden_button, self.primerOrden_box))
+        self.segundoOrden_button.toggled.connect(lambda: gf.filtro_button_toggled(self, self.segundoOrden_button, self.segundoOrden_box))
+        self.ordenSuperior_button.toggled.connect(lambda: gf.filtro_box_toggle(self, self.ordenSuperior_button, self.numerador_label, self.denominador_label, self.numerador_text, self.denominador_text))
 
+        self.feSenoide_button.toggled.connect(lambda: gf.fe_button_toggled(self))
+        self.feEscalon_button.toggled.connect(lambda: gf.fe_button_toggled(self))
+        self.fePulso_button.toggled.connect(lambda: gf.fe_button_toggled(self))
 
-    def on_radioButton_toggled(self):
-        if self.radioButton.isChecked():
-            self.comboBox.setEnabled(True)
-            self.comboBox.setCurrentIndex(0)
-        else:
-            self.comboBox.setEnabled(False)
-            self.comboBox.setCurrentIndex(-1)
+        self.feSenoide_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+        self.feEscalon_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+        self.fePulso_button.toggled.connect(lambda: fplt.generate_input_signal(self))
 
-    def on_radioButton_2_toggled(self):
-        if self.radioButton_2.isChecked():
-            self.comboBox_2.setEnabled(True)
-            self.comboBox_2.setCurrentIndex(0)
-        else:
-            self.comboBox_2.setEnabled(False)
-            self.comboBox_2.setCurrentIndex(-1)
+        self.feAmplitud_text.textChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.feFrecuencia_text.textChanged.connect(lambda: fplt.generate_input_signal(self))
+
             
 
 

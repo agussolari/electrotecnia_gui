@@ -6,52 +6,196 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1115</width>
-    <height>589</height>
+    <width>1124</width>
+    <height>736</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QWidget" name="widget_2" native="true">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>30</y>
-      <width>351</width>
-      <height>161</height>
+      <x>40</x>
+      <y>330</y>
+      <width>331</width>
+      <height>261</height>
      </rect>
     </property>
-    <property name="currentIndex">
-     <number>2</number>
-    </property>
-    <widget class="QWidget" name="tab_1">
-     <attribute name="title">
-      <string>Filtros</string>
-     </attribute>
+    <widget class="QRadioButton" name="fePulso_button">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pulso periodico</string>
+     </property>
     </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Personalizado</string>
-     </attribute>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Señal de entrada</string>
+     </property>
     </widget>
-    <widget class="QWidget" name="tab_3">
-     <attribute name="title">
-      <string>RLC</string>
-     </attribute>
+    <widget class="QRadioButton" name="feSenoide_button">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>95</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Senoide</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="feEscalon_button">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>95</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Escalon u(t)</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="feAmplitud_label">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>60</y>
+       <width>55</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Amplitud</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="feAmplitud_text">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>60</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="feAmplitud_box">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>60</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>mV</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>V</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="feFrecuencia_label">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>110</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Frecuencia</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="feFrecuencia_text">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>110</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="feFrecuencia_box">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>110</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Hz</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>kHz</string>
+      </property>
+     </item>
     </widget>
    </widget>
    <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>190</y>
-      <width>461</width>
-      <height>271</height>
+      <x>20</x>
+      <y>20</y>
+      <width>351</width>
+      <height>301</height>
      </rect>
     </property>
-    <widget class="QRadioButton" name="radioButton">
+    <widget class="QRadioButton" name="primerOrden_button">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -77,7 +221,7 @@
       <string>Tipo de filtro</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="primerOrden_box">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -113,11 +257,11 @@
       </property>
      </item>
     </widget>
-    <widget class="QRadioButton" name="radioButton_2">
+    <widget class="QRadioButton" name="segundoOrden_button">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>90</y>
+       <y>120</y>
        <width>111</width>
        <height>21</height>
       </rect>
@@ -126,17 +270,20 @@
       <string>Segundo orden</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="segundoOrden_box">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="geometry">
       <rect>
-       <x>140</x>
-       <y>90</y>
+       <x>130</x>
+       <y>120</y>
        <width>131</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="currentIndex">
+      <number>-1</number>
      </property>
      <item>
       <property name="text">
@@ -164,11 +311,11 @@
       </property>
      </item>
     </widget>
-    <widget class="QRadioButton" name="radioButton_3">
+    <widget class="QRadioButton" name="ordenSuperior_button">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>140</y>
+       <y>200</y>
        <width>121</width>
        <height>21</height>
       </rect>
@@ -177,14 +324,14 @@
       <string>Orden superior</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="numerador_label">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>170</y>
+       <y>230</y>
        <width>71</width>
        <height>16</height>
       </rect>
@@ -193,14 +340,14 @@
       <string>Numerador</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="denominador_label">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>160</y>
+       <x>240</x>
+       <y>230</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -209,37 +356,40 @@
       <string>Denominador</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="numerador_text">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>190</y>
+       <y>250</y>
        <width>113</width>
        <height>22</height>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="denominador_text">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>190</y>
+       <x>220</x>
+       <y>250</y>
        <width>113</width>
        <height>22</height>
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="f0_label">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>310</x>
-       <y>40</y>
+       <x>40</x>
+       <y>80</y>
        <width>21</width>
        <height>16</height>
       </rect>
@@ -248,21 +398,27 @@
       <string>f0</string>
      </property>
     </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox">
+    <widget class="QDoubleSpinBox" name="f0_spinBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>330</x>
-       <y>40</y>
+       <x>70</x>
+       <y>80</y>
        <width>62</width>
        <height>22</height>
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_3">
+    <widget class="QComboBox" name="f0_box">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>400</x>
-       <y>40</y>
+       <x>140</x>
+       <y>80</y>
        <width>51</width>
        <height>21</height>
       </rect>
@@ -278,6 +434,110 @@
       </property>
      </item>
     </widget>
+    <widget class="QLabel" name="w0_label">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>160</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>w0</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="w0_spinBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>160</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="w0_box">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>160</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Hz</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>kHz</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="xi_label">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>160</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>e</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="xi_spinBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>160</y>
+       <width>58</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>20</y>
+      <width>741</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Señal</string>
+    </property>
+    <widget class="MplWidget" name="MplWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>721</width>
+       <height>261</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -285,13 +545,21 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1115</width>
-     <height>26</height>
+     <width>1124</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MplWidget</class>
+   <extends>QWidget</extends>
+   <header>mplwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
