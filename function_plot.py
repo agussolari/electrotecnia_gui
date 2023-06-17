@@ -1,8 +1,9 @@
 import input_signals as isig
 import matplotlib.pyplot as plt
 import numpy as np
+import output_signals as osig
 
-input_signal = isig.input_signal()
+
 
 
 def generate_input_signal(self):
@@ -14,13 +15,14 @@ def generate_input_signal(self):
 
         if a0 != '' and f0 != '' and float(a0) > 0 and float(f0) > 0:
             # self.update_input_plot(self)
-            input_signal = isig.generate_sinusoidal_signal(100, float(f0), 100, float(a0), 0)
+            isig.input_signal.tt, isig.input_signal.st = isig.generate_sinusoidal_signal(100, float(f0), 10000, float(a0), 0)
             #plot input signal with matplotlib
             print("Plotting input signal")
-            tt, st = input_signal
+
+            osig.test(self)
 
             self.MplWidget.canvas.axes.clear()
-            self.MplWidget.canvas.axes.plot(tt, st)
+            self.MplWidget.canvas.axes.plot(isig.input_signal.tt, isig.input_signal.st)
             self.MplWidget.canvas.axes.legend(('test1', 'test2'))
             self.MplWidget.canvas.draw()
 

@@ -2,10 +2,13 @@ from scipy import signal
 import matplotlib.pyplot as plt
 import numpy as np
 
-class input_signal:
+
+
+class signal:
     tt = []
     st = []
     
+input_signal = signal()
 
 # generear una señal senoidal de frecuencia, amplitud y fase configurables
 def generate_sinusoidal_signal(fs, f0, N, a0=1, p0=0):
@@ -19,8 +22,9 @@ def generate_sinusoidal_signal(fs, f0, N, a0=1, p0=0):
     T0 = 1/f0
     # calculo el periodo de muestreo
     Ts = 1/fs
-    # genero el vector de tiempos
-    tt = np.linspace(0, (N-1)*Ts, N)
+    #quiero que el vector de tiempos se ajuste a la frecuencia de la señal y tenga N muestras
+    tt = np.linspace(0, 2*T0, N)    
+    
     # genero la señal
     st = a0 * np.sin(2*np.pi*f0*tt + p0)
 
@@ -40,7 +44,7 @@ def generate_square_signal(fs, f0, N, a0=1, p0=0, dc=0.5):
     # calculo el periodo de muestreo
     Ts = 1/fs
     # genero el vector de tiempos
-    tt = np.linspace(0, (N-1)*Ts, N)
+    tt = np.linspace(0, 2*T0, N)
     # genero la señal
     st = a0 * signal.square(2*np.pi*f0*tt + p0, duty=dc)
 
@@ -60,7 +64,7 @@ def generate_triangular_signal(fs, f0, N, a0=1, p0=0, dc=0.5):
     # calculo el periodo de muestreo
     Ts = 1/fs
     # genero el vector de tiempos
-    tt = np.linspace(0, (N-1)*Ts, N)
+    tt = np.linspace(0, 2*T0, N)
     # genero la señal
     st = a0 * signal.sawtooth(2*np.pi*f0*tt + p0, width=dc)
 
@@ -80,7 +84,7 @@ def generate_exponential_signal(fs, f0, N, a0=1, p0=0, tau=1):
     # calculo el periodo de muestreo
     Ts = 1/fs
     # genero el vector de tiempos
-    tt = np.linspace(0, (N-1)*Ts, N)
+    tt = np.linspace(0, 2*T0, N)
     # genero la señal
     st = a0 * np.exp(-tt/tau) * np.sin(2*np.pi*f0*tt + p0)
 
@@ -95,7 +99,7 @@ def generate_step_signal(fs, N, a0=1):
     # calculo el periodo de muestreo
     Ts = 1/fs
     # genero el vector de tiempos
-    tt = np.linspace(0, (N-1)*Ts, N)
+    tt = np.linspace(0, 2*Ts, N)
     # genero la señal
     st = a0 * np.heaviside(tt, 1)
 
