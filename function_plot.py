@@ -19,14 +19,16 @@ def generate_input_signal(self):
             #plot input signal with matplotlib
             print("Plotting input signal")
 
-            osig.test(self)
 
             self.MplWidget.canvas.axes.clear()
             self.MplWidget.canvas.axes.plot(isig.input_signal.tt, isig.input_signal.st)
-            self.MplWidget.canvas.axes.legend(('test1', 'test2'))
+            self.MplWidget.canvas.axes.legend("Entrada")
             self.MplWidget.canvas.draw()
 
+            osig.test(self)
+
         else:
+            print("Clearing input signal plot")
             self.MplWidget.canvas.axes.clear()
             self.MplWidget.canvas.draw()
 
@@ -43,11 +45,12 @@ def generate_input_signal(self):
             tt, st = input_signal
 
 
-            self.MplWidget.canvas.axes.clear()
+            # self.MplWidget.canvas.axes.clear()
             self.MplWidget.canvas.axes.plot(tt, st)
-            self.MplWidget.canvas.axes.legend(('test1', 'test2'))
+            self.MplWidget.canvas.axes.legend("En")
             self.MplWidget.canvas.draw()
         else:
+            print("Clearing input signal plot")
             self.MplWidget.canvas.axes.clear()
             self.MplWidget.canvas.draw()
 
@@ -64,12 +67,13 @@ def generate_input_signal(self):
             print("Plotting input signal")
             tt, st = input_signal
 
-            self.MplWidget.canvas.axes.clear()
+            # self.MplWidget.canvas.axes.clear()
             self.MplWidget.canvas.axes.plot(tt, st)
-            self.MplWidget.canvas.axes.legend(('test1', 'test2'))
+            self.MplWidget.canvas.axes.legend("En")
             self.MplWidget.canvas.draw()
 
         else:
+            print("Clearing input signal plot")
             self.MplWidget.canvas.axes.clear()
             self.MplWidget.canvas.draw()
 
