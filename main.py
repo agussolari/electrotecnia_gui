@@ -32,21 +32,47 @@ class gui(QMainWindow):
 
 
     def connect_signals(self):
-        #When the button is clicked, show me the combo box value
+        #Conecto los botones de la barra de filtros
         self.primerOrden_button.toggled.connect(lambda: gf.filtro_button_toggled(self, self.primerOrden_button, self.primerOrden_box))
         self.segundoOrden_button.toggled.connect(lambda: gf.filtro_button_toggled(self, self.segundoOrden_button, self.segundoOrden_box))
         self.ordenSuperior_button.toggled.connect(lambda: gf.filtro_box_toggle(self, self.ordenSuperior_button, self.numerador_label, self.denominador_label, self.numerador_text, self.denominador_text))
 
+        #Conecto los botones de la barra de señales de entrada
         self.feSenoide_button.toggled.connect(lambda: gf.fe_button_toggled(self))
         self.feEscalon_button.toggled.connect(lambda: gf.fe_button_toggled(self))
         self.fePulso_button.toggled.connect(lambda: gf.fe_button_toggled(self))
 
+        #Conecto los botones de la barra de señales de salida
+            #Tipo de señal
         self.feSenoide_button.toggled.connect(lambda: fplt.generate_input_signal(self))
         self.feEscalon_button.toggled.connect(lambda: fplt.generate_input_signal(self))
         self.fePulso_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+            #Tipo de filtro
+        self.primerOrden_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+        self.segundoOrden_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+        self.ordenSuperior_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+            #Tipo de filtro de primer orden
+        self.primerOrden_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
+            #Tipo de filtro de segundo orden
+        self.segundoOrden_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
+            #Tipo de filtro de orden superior
+        self.numerador_text.textChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.denominador_text.textChanged.connect(lambda: fplt.generate_input_signal(self))
 
-        self.feAmplitud_text.textChanged.connect(lambda: fplt.generate_input_signal(self))
-        self.feFrecuencia_text.textChanged.connect(lambda: fplt.generate_input_signal(self))
+
+            #Amplitud
+        self.feAmplitud_text.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+            #Frecuencia
+        self.feFrecuencia_text.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+            #Datos de filtro de primer orden
+        self.f0_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.f0_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.ganancia_primerOrden_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+            #Datos de filtro de segundo orden
+        self.w0_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.w0_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.ganancia_segundoOrden_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.xi_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
 
             
 

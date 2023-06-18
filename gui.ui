@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1124</width>
-    <height>736</height>
+    <width>1384</width>
+    <height>871</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>40</x>
       <y>330</y>
       <width>331</width>
-      <height>261</height>
+      <height>171</height>
      </rect>
     </property>
     <widget class="QRadioButton" name="fePulso_button">
@@ -94,22 +94,6 @@
       <string>Amplitud</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="feAmplitud_text">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>60</y>
-       <width>41</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="clearButtonEnabled">
-      <bool>false</bool>
-     </property>
-    </widget>
     <widget class="QComboBox" name="feAmplitud_box">
      <property name="geometry">
       <rect>
@@ -152,16 +136,6 @@
       <string>Frecuencia</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="feFrecuencia_text">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>110</y>
-       <width>41</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QComboBox" name="feFrecuencia_box">
      <property name="enabled">
       <bool>true</bool>
@@ -184,6 +158,38 @@
        <string>kHz</string>
       </property>
      </item>
+    </widget>
+    <widget class="QDoubleSpinBox" name="feAmplitud_text">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>60</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <double>1000000000.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="feFrecuencia_text">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>110</y>
+       <width>51</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::NoButtons</enum>
+     </property>
+     <property name="maximum">
+      <double>10000000000.989999771118164</double>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="widget" native="true">
@@ -234,7 +240,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>-1</number>
+      <number>0</number>
      </property>
      <item>
       <property name="text">
@@ -249,11 +255,6 @@
      <item>
       <property name="text">
        <string>Pasa todo</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Filtro Notch</string>
       </property>
      </item>
     </widget>
@@ -410,6 +411,9 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="maximum">
+      <double>1000000000.000000000000000</double>
+     </property>
     </widget>
     <widget class="QComboBox" name="f0_box">
      <property name="enabled">
@@ -461,6 +465,9 @@
        <width>62</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="maximum">
+      <double>1000000000.000000000000000</double>
      </property>
     </widget>
     <widget class="QComboBox" name="w0_box">
@@ -514,6 +521,82 @@
        <height>22</height>
       </rect>
      </property>
+     <property name="maximum">
+      <double>1000000000.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.100000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="ganancia_primerOrden_spinBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>80</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <double>1000000000.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.500000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="ganancia_segundoOrden_spinBox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>190</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <double>1000000000.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.500000000000000</double>
+     </property>
+    </widget>
+    <widget class="QLabel" name="ganancia_segundoOrden_label">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>190</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Ganancia</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="ganancia_primerOrden_label">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>80</y>
+       <width>51</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Ganancia</string>
+     </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox">
@@ -539,14 +622,72 @@
      </property>
     </widget>
    </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>320</y>
+      <width>821</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>2</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Amplitud</string>
+     </attribute>
+     <widget class="MplWidget" name="MplWidget_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>781</width>
+        <height>451</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Fase</string>
+     </attribute>
+     <widget class="MplWidget" name="MplWidget_3" native="true">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>781</width>
+        <height>451</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Polos y Ceros</string>
+     </attribute>
+     <widget class="MplWidget" name="MplWidget_4" native="true">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>781</width>
+        <height>451</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1124</width>
-     <height>21</height>
+     <width>1384</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

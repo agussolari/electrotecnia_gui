@@ -1,125 +1,125 @@
 from scipy import signal
-import matplotlib.pyplot as plt
-import numpy as np
+
+class FilterFirstOrder:
+    def __init__(self, frecuencia, ganancia):
+        self.frec = frecuencia
+        self.gan = ganancia
+
+    def fun_pb1(self):
+        num = [self.gan]
+        den = [1/self.frec, 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.frec)
+        return w, mag, phase, num, den
+
+    def fun_pa1(self):
+        num = [self.gan, 0]
+        den = [1/self.frec, 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.frec)
+        return w, mag, phase, num, den
+
+    def fun_pt1(self):
+        num = [self.gan/self.frec, -self.gan]
+        den = [1/self.frec, 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.frec)
+        return w, mag, phase, num, den
+
+    
+
+class FilterSecondOrder:
+    def __init__(self, frecuencia, ganancia, epsilon):
+        self.wo = frecuencia
+        self.gan = ganancia
+        self.z = epsilon
+
+    def fun_pb2(self):
+        num = [self.gan]
+        den = [(1/(self.wo**2)), (2*self.z/self.wo), 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.wo)
+        return w, mag, phase, num, den
+
+    def fun_pa2(self):
+        num = [self.gan,0,0]
+        den = [(1/(self.wo**2)), (2*self.z/self.wo), 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.wo)
+        return w, mag, phase, num, den
+
+    def fun_pt2(self):
+        num = [(self.gan/(self.wo**2)),(-2*self.z/self.wo),1]
+        den = [(1/(self.wo**2)), (2*self.z/self.wo), 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.wo)
+        return w, mag, phase, num, den
+
+    def fun_pbanda2(self):
+        num = [0, self.gan, 0]
+        den = [(1/(self.wo**2)), (2*self.z/self.wo),1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.wo)
+        return w, mag, phase, num, den
 
 
-# filtro de primer orden 
-# pasa bajos separando el denomianador y numerador en dos listas con frecuencia variable
-# y con variación de la ganancia del filtro
-def fun_pb1(frec, fc, gan):
-    num = [gan]
-    dem = [1, fc]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# filtro de primer orden pasa altos con frecuencia variable
-# y con variación de la ganancia del filtro
-def fun_pa1(frec, fc, gan):
-    num = [gan, 0]
-    dem = [1, fc]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# filtro de primer orden pasa todo y ganancia
-def fun_pt1(frec, gan):
-    num = [gan]
-    dem = [1]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtro con polo y/o cero arbitrarios con control de frecuencia y ganancia
-def fun_pcz(frec, gan, polos, ceros):
-    num = [gan]
-    dem = [1]
-    for i in range(len(ceros)):
-        num.append(-ceros[i])
-    for i in range(len(polos)):
-        dem.append(-polos[i])
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtros de segundo orden pasa bajos con coeficiente de amortiguamiento, wo y ganancia variables
-def fun_pb2(frec, z, wo, gan):
-    num = [gan*wo**2]
-    dem = [1, 2*z*wo, wo**2]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtros de segundo orden pasa altos con coeficiente de amortiguamiento, wo y ganancia variables
-def fun_pa2(frec, z, wo, gan):
-    num = [gan, 0, gan*wo**2]
-    dem = [1, 2*z*wo, wo**2]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtros de segundo orden pasa todo con coeficiente de amortiguamiento, wo y ganancia variables
-def fun_pt2(frec, z, wo, gan):
-    num = [gan*wo**2]
-    dem = [1, 2*z*wo, wo**2]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# fitro de segundo orden pasa banda con coeficiente de amortiguamiento, wo y ganancia variables
-def fun_pbanda2(frec, z, wo, gan):
-    num = [gan*wo**2, 0, 0]
-    dem = [1, 2*z*wo, wo**2]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtro notch de segundo orden con w0, coef de amortiguamiento y ganancia variables
-def fun_notch2(frec, z, wo, gan):
-    num = [gan * (wo**2), 0, gan]
-    dem = [wo**2 , 2*z*wo, ]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtro low pass notch de segundo orden con coeficiente de amoritguamiento, wo y ganancia variables
-def fun_lpn2(frec, z, wo, gan):
-    num = [gan*wo**2, 0, gan*wo**2]
-    dem = [1, 2*z*wo, wo**2]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtro high pass notch de segundo orden con coeficiente de amoritguamiento, wo y ganancia variables
-def fun_hpn2(frec, z, wo, gan):
-    num = [gan, 0, gan]
-    dem = [1, 2*z*wo, wo**2]
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtro de segundo orden con polos y/o ceros arbitrarios
-def fun_pcz2(frec, gan, polos, ceros):
-    num = [gan]
-    dem = [1]
-    for i in range(len(ceros)):
-        num.append(-ceros[i])
-    for i in range(len(polos)):
-        dem.append(-polos[i])
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
-
-# Filtros de orden superior
-def fun_pczn(frec, gan, polos, ceros):
-    num = [gan]
-    dem = [1]
-    for i in range(len(ceros)):
-        num.append(-ceros[i])
-    for i in range(len(polos)):
-        dem.append(-polos[i])
-    sys = signal.TransferFunction(num, dem)
-    w, mag, phase = signal.bode(sys, frec)
-    return w, mag, phase
 
 
+class FilterNotch:
+    def __init__(self, frecPolo, frecCero, ganancia, epsilonPolo, epsilonCero):
+        self.wp = frecPolo
+        self.wc = frecCero
+        self.gan = ganancia
+        self.zp = epsilonPolo
+        self.zc = epsilonCero
+
+    #https://www.electrical4u.com/band-stop-notch-filter/
+    def fun_notchbase(self):
+        num = [self.gan, 0, self.gan/(self.wc**2)]
+        den = [1 , self.zp*self.wp, (self.wp**2)]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys)
+        return w, mag, phase, num, den
+    #wp = wc -> notch estandar
+    #wp < wc -> low pass
+    #wp > wc -> high pass
+
+    
+    def fun_notch(self):
+        num = [(self.gan*(1/(self.wp**2))), 0, self.gan]
+        den = [(1/(self.wp**2)) , 2*self.zp*(1/(self.wp)), 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.wp)
+        return w, mag, phase, num, den
+
+    def fun_lpn(self):
+        num = [(self.gan*(1/(self.wc**2))), 2*self.gan*self.zc*(1/(self.wc)), self.gan]
+        den = [(1/(self.wp**2)) , 2*self.zp*(1/(self.wp)), 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys)
+        return w, mag, phase, num, den
+    
+    def fun_hpn(self):
+        num = [(self.gan*(1/(self.wc**2))), 2*self.gan*self.zc*(1/self.wc), self.gan]
+        den = [(1/self.wp**2) , 2*self.zp*(1/self.wp), 1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys)
+        return w, mag, phase, num, den
+
+
+class FilterConfig:
+    def __init__(self, ganancia, polos, ceros):
+        self.gan = ganancia
+        self.polos = polos
+        self.ceros = ceros
+
+    def fun_config(self):
+        num = [self.gan]
+        den = [1]
+        for i in range(len(self.ceros)):
+            num.append(-self.ceros[i])
+        for i in range(len(self.polos)):
+            den.append(-self.polos[i])
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys)
+        return w, mag, phase, num, den

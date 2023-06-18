@@ -1,4 +1,4 @@
-from scipy import signal
+from scipy import signal as sg
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -46,7 +46,7 @@ def generate_square_signal(fs, f0, N, a0=1, p0=0, dc=0.5):
     # genero el vector de tiempos
     tt = np.linspace(0, 2*T0, N)
     # genero la señal
-    st = a0 * signal.square(2*np.pi*f0*tt + p0, duty=dc)
+    st = a0 * sg.square(2*np.pi*f0*tt + p0, dc)
 
     return tt, st
 
@@ -66,7 +66,7 @@ def generate_triangular_signal(fs, f0, N, a0=1, p0=0, dc=0.5):
     # genero el vector de tiempos
     tt = np.linspace(0, 2*T0, N)
     # genero la señal
-    st = a0 * signal.sawtooth(2*np.pi*f0*tt + p0, width=dc)
+    st = a0 * sg.sawtooth(2*np.pi*f0*tt + p0, width=dc)
 
     return tt, st
 
