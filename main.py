@@ -24,6 +24,11 @@ class gui(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("gui.ui", self)
+
+        self.setWindowTitle("Simulador de filtros")
+        self.setWindowIcon(QIcon("logo.png"))
+        # self.setFixedSize(1200, 850)        
+
         self.show()
 
         self.connect_signals()
@@ -41,6 +46,9 @@ class gui(QMainWindow):
         self.feSenoide_button.toggled.connect(lambda: gf.fe_button_toggled(self))
         self.feEscalon_button.toggled.connect(lambda: gf.fe_button_toggled(self))
         self.fePulso_button.toggled.connect(lambda: gf.fe_button_toggled(self))
+        self.feTriangular_button.toggled.connect(lambda: gf.fe_button_toggled(self))
+        self.feExponencial_button.toggled.connect(lambda: gf.fe_button_toggled(self))
+        self.feImpulso_button.toggled.connect(lambda: gf.fe_button_toggled(self))
 
         #Conecto los botones de la barra de señales de salida
             #Tipo de señal
@@ -56,8 +64,8 @@ class gui(QMainWindow):
             #Tipo de filtro de segundo orden
         self.segundoOrden_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
             #Tipo de filtro de orden superior
-        self.numerador_text.textChanged.connect(lambda: fplt.generate_input_signal(self))
-        self.denominador_text.textChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.numerador_text.returnPressed.connect(lambda: fplt.generate_input_signal(self))
+        self.denominador_text.returnPressed.connect(lambda: fplt.generate_input_signal(self))
 
 
             #Amplitud
@@ -73,7 +81,9 @@ class gui(QMainWindow):
         self.w0_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
         self.ganancia_segundoOrden_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
         self.xi_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
-
+            #Escala entrada
+        self.feAmplitud_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.feFrecuencia_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
             
 
 

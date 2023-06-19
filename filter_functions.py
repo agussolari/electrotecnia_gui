@@ -1,4 +1,6 @@
 from scipy import signal
+import numpy as np
+import sympy
 
 class FilterFirstOrder:
     def __init__(self, frecuencia, ganancia):
@@ -14,7 +16,7 @@ class FilterFirstOrder:
 
     def fun_pa1(self):
         num = [self.gan, 0]
-        den = [1/self.frec, 1]
+        den = [1, self.frec]
         sys = signal.TransferFunction(num, den)
         w, mag, phase = signal.bode(sys, self.frec)
         return w, mag, phase, num, den
@@ -43,7 +45,7 @@ class FilterSecondOrder:
 
     def fun_pa2(self):
         num = [self.gan,0,0]
-        den = [(1/(self.wo**2)), (2*self.z/self.wo), 1]
+        den = [1, (2*self.z*self.wo), (self.wo**2)]
         sys = signal.TransferFunction(num, den)
         w, mag, phase = signal.bode(sys, self.wo)
         return w, mag, phase, num, den
@@ -56,8 +58,15 @@ class FilterSecondOrder:
         return w, mag, phase, num, den
 
     def fun_pbanda2(self):
-        num = [0, self.gan, 0]
+        num = [0, (self.gan*2*self.z)/(self.wo), 0]
         den = [(1/(self.wo**2)), (2*self.z/self.wo),1]
+        sys = signal.TransferFunction(num, den)
+        w, mag, phase = signal.bode(sys, self.wo)
+        return w, mag, phase, num, den
+
+    def fun_notch(self):
+        num = [(self.gan*(1/(self.wo**2))), 0, self.gan]
+        den = [(1/(self.wo**2)) , 2*self.z*(1/(self.wo)), 1]
         sys = signal.TransferFunction(num, den)
         w, mag, phase = signal.bode(sys, self.wo)
         return w, mag, phase, num, den
@@ -84,14 +93,6 @@ class FilterNotch:
     #wp < wc -> low pass
     #wp > wc -> high pass
 
-    
-    def fun_notch(self):
-        num = [(self.gan*(1/(self.wp**2))), 0, self.gan]
-        den = [(1/(self.wp**2)) , 2*self.zp*(1/(self.wp)), 1]
-        sys = signal.TransferFunction(num, den)
-        w, mag, phase = signal.bode(sys, self.wp)
-        return w, mag, phase, num, den
-
     def fun_lpn(self):
         num = [(self.gan*(1/(self.wc**2))), 2*self.gan*self.zc*(1/(self.wc)), self.gan]
         den = [(1/(self.wp**2)) , 2*self.zp*(1/(self.wp)), 1]
@@ -108,18 +109,51 @@ class FilterNotch:
 
 
 class FilterConfig:
-    def __init__(self, ganancia, polos, ceros):
+    def __init__(self, ganancia, polos_str, ceros_str):  # "1,4,3.5,8-3j"
         self.gan = ganancia
-        self.polos = polos
-        self.ceros = ceros
+        self.polos = polos_str.split(",")
+        self.ceros = ceros_str.split(",")
 
     def fun_config(self):
-        num = [self.gan]
-        den = [1]
-        for i in range(len(self.ceros)):
-            num.append(-self.ceros[i])
-        for i in range(len(self.polos)):
-            den.append(-self.polos[i])
+        num = (self.gan * np.polynomial.polynomial.polyfromroots(self.ceros))
+        den = np.polynomial.polynomial.polyfromroots(self.polos)
         sys = signal.TransferFunction(num, den)
         w, mag, phase = signal.bode(sys)
         return w, mag, phase, num, den
+
+
+
+def get_poly_coeffs(poly_str):
+    # Convert the string to a Sympy expression
+    x = sympy.symbols('x')
+    poly_expr = sympy.sympify(poly_str)
+
+    # Get the coefficients of the polynomial
+    coeffs = sympy.Poly(poly_expr, x).all_coeffs()
+
+    return coeffs
+
+    
+class FilterCustom:
+    def __init__(self, num_str , den_str):
+        self.num = []
+        self.den = []
+        if num_str != "" and den_str != "":
+            self.num = get_poly_coeffs(num_str)
+            self.den = get_poly_coeffs(den_str)
+
+            
+
+    def fun_custom(self):
+        if (self.num != [] and self.den != []) or (self.num != None and self.den != None):
+            if(len(self.den)>=len(self.num)):
+                print("custon num:", self.num)
+                print("custom den:",self.den)
+            
+                num_float = list(map(float, self.num))
+                den_float = list(map(float, self.den))
+            
+                sys = signal.TransferFunction(num_float, den_float)
+                w, mag, phase = signal.bode(sys)
+                return w, mag, phase, num_float, den_float
+

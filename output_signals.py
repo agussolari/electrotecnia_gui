@@ -52,12 +52,22 @@ def test(self):
 
 
     fn_salida = salida()
+    #obtengo los escalamientos
+    Wscale = self.w0_box.currentIndex()
+    Fscale = self.f0_box.currentIndex()
+    #si las cajas estan vacías, por default grafica en Hz y rad/seg
+    if Wscale < 0:
+        Wscale = 0
+    if Fscale < 0:
+        Fscale = 0
+
 
     #Obtengo el tipo de filtro de primer orden
     if self.primerOrden_button.isChecked():
 
-        ganancia = float(self.ganancia_primerOrden_spinBox.value())
-        frecuencia = float(self.f0_spinBox.value())
+        ganancia =  float(self.ganancia_primerOrden_spinBox.value())
+        
+        frecuencia = float(self.f0_spinBox.value()) * (10 ** (3*Fscale))
 
         primerOrden_index =  self.primerOrden_box.currentIndex()
 
@@ -79,7 +89,7 @@ def test(self):
     elif self.segundoOrden_button.isChecked():
 
         ganancia = float(self.ganancia_segundoOrden_spinBox.value())
-        w0 = float(self.w0_spinBox.value())
+        w0 = float(self.w0_spinBox.value()) * (10 ** (3*Wscale))
         xi = float(self.xi_spinBox.value())
 
         segundoOrden_index = self.segundoOrden_box.currentIndex()
@@ -98,49 +108,80 @@ def test(self):
             
             elif segundoOrden_index == segundoOrden_filtros.S_PASABANDA.value:
                 w0, mag, phase, numerador_transferencia, denominador_transferencia = segundoOrden_filter.fun_pbanda2()
+
+            elif segundoOrden_index == segundoOrden_filtros.S_NOTCH.value:
+                w0, mag, phase, numerador_transferencia, denominador_transferencia = segundoOrden_filter.fun_notch()
+            
+
+    #Obtengo el tipo de filtro de orden superior
+    elif self.ordenSuperior_button.isChecked():
+        num_string = self.numerador_text.text()
+        den_string = self.denominador_text.text()
         
+        print(num_string)
+        print(den_string)
+
+        if num_string != "" and den_string != "" and num_string != None and den_string != None:
+            ordenSuperior_filter = ff.FilterCustom(num_string, den_string)
+            w0, mag, phase, numerador_transferencia, denominador_transferencia = ordenSuperior_filter.fun_custom()
+            
+
             
 
 
     # Obtengo la transferencia del sistema
     # Salida del sistema
-    if self.primerOrden_button.isChecked() or self.segundoOrden_button.isChecked():
+    if self.primerOrden_button.isChecked() or self.segundoOrden_button.isChecked() or self.ordenSuperior_button.isChecked() :
         print("Calculating transfer function")
         print("Numerador:", numerador_transferencia)
         print("Denominador:", denominador_transferencia)
         
-        if numerador_transferencia != [] and denominador_transferencia != []:
+        
+        if numerador_transferencia != [] and denominador_transferencia != [] and valores_entrada != [] and tiempo_entrada != []:
             lti = signal.lti(numerador_transferencia, denominador_transferencia)  # Creo el sistema
             tiempo_salida, datos_salida, x = signal.lsim(lti, valores_entrada, tiempo_entrada)  # Obtengo la salida del sistema
 
-            print("Ploting output signal")
             # Grafico la salida
-            self.MplWidget.canvas.axes.plot(tiempo_salida, datos_salida)
-            self.MplWidget.canvas.axes.legend("Salida")
+            self.MplWidget.axes_output.clear()
+            self.MplWidget.axes_output.plot(tiempo_salida, datos_salida, color = "orange")
+            self.MplWidget.axes_output.legend("Salida", loc='upper left', shadow=True, fontsize='small', frameon=False)
+            self.MplWidget.axes_output.set_xlabel('Tiempo [s]')
+            # self.MplWidget.axes_output.set_ylabel('Tensión [V]')
             self.MplWidget.canvas.draw()
 
-            # Grafico 
+            #Grafico 
             #Clear
             w, m, p = signal.TransferFunction(numerador_transferencia, denominador_transferencia).bode()
 
             self.MplWidget_2.canvas.axes.clear()
-            self.MplWidget_2.canvas.axes.semilogx(w, m, label = "Amplitud", color = "blue", scalex = True)
+            self.MplWidget_2.canvas.axes.semilogx(w, m, color = "blue", scalex = True)
             self.MplWidget_2.canvas.axes.set_xscale("log")
             self.MplWidget_2.canvas.axes.set_yscale("linear")
+            self.MplWidget_2.canvas.axes.set_xlabel('Frecuencia [Hz]')
+            self.MplWidget_2.canvas.axes.set_ylabel('Amplitud [dB]')
             self.MplWidget_2.canvas.axes.grid(True, which="both")
+            self.MplWidget_2.figure.tight_layout()
             self.MplWidget_2.canvas.draw()
             
             self.MplWidget_3.canvas.axes.clear()
             self.MplWidget_3.canvas.axes.semilogx(w,p)
             self.MplWidget_3.canvas.axes.set_xscale("log")
             self.MplWidget_3.canvas.axes.set_yscale("linear")
+            self.MplWidget_3.canvas.axes.set_xlabel('Frecuencia [Hz]')
+            self.MplWidget_3.canvas.axes.set_ylabel('Fase [°]')
             self.MplWidget_3.canvas.axes.grid(True, which="both")
+            self.MplWidget_3.figure.tight_layout()
             self.MplWidget_3.canvas.draw()
             
             self.MplWidget_4.canvas.axes.clear()
-            self.MplWidget_4.canvas.axes.plot(lti.zeros.real, lti.zeros.imag, 'o')
-            self.MplWidget_4.canvas.axes.plot(lti.poles.real, lti.poles.imag, 'x')
+            self.MplWidget_4.canvas.axes.scatter(lti.zeros.real, lti.zeros.imag, marker = 'o', color = 'blue', label = 'Ceros', s=100)
+            self.MplWidget_4.canvas.axes.scatter(lti.poles.real, lti.poles.imag, marker = 'x', color = 'red', label = 'Polos', s=100)
+            self.MplWidget_4.canvas.axes.axhline(0, color='black', linewidth=1)
+            self.MplWidget_4.canvas.axes.axvline(0, color='black', linewidth=1)
+            self.MplWidget_4.canvas.axes.set_xlabel('σ')
+            self.MplWidget_4.canvas.axes.set_ylabel('jω')
             self.MplWidget_4.canvas.axes.grid(True, which="both")
+            self.MplWidget_4.figure.tight_layout()
             self.MplWidget_4.canvas.draw()
 
 

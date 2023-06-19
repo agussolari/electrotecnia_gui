@@ -31,7 +31,7 @@ def generate_sinusoidal_signal(fs, f0, N, a0=1, p0=0):
     return tt, st
 
 # generear una señal cuadrada de frecuencia, amplitud, fase y duty cycle configurables
-def generate_square_signal(fs, f0, N, a0=1, p0=0, dc=0.5):
+def generate_square_signal(fs, f0, N, a0=1, p0=0, dc=1):
     # fs: frecuencia de muestreo
     # f0: frecuencia de la señal
     # N: cantidad de muestras
@@ -51,7 +51,7 @@ def generate_square_signal(fs, f0, N, a0=1, p0=0, dc=0.5):
     return tt, st
 
 # generear una señal triangular de frecuencia, amplitud, fase y duty cycle configurables
-def generate_triangular_signal(fs, f0, N, a0=1, p0=0, dc=0.5):
+def generate_triangular_signal(fs, f0, N, a0=1, p0=0, dc=1):
     # fs: frecuencia de muestreo
     # f0: frecuencia de la señal
     # N: cantidad de muestras

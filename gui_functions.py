@@ -50,6 +50,9 @@ def filtro_button_toggled(self, button, box):
         self.xi_spinBox.setValue(0)
         self.ganancia_primerOrden_spinBox.setEnabled(False)
         self.ganancia_primerOrden_spinBox.setValue(0)
+        self.numerador_text.clear()
+        self.denominador_text.clear()
+        
     
 
 def filtro_box_toggle(self, button, label1, label2 , text1, text2):
@@ -63,9 +66,11 @@ def filtro_box_toggle(self, button, label1, label2 , text1, text2):
     else:
         label1.setEnabled(False)
         text1.setEnabled(False)
+        text1.clear()
 
         label2.setEnabled(False)
         text2.setEnabled(False)
+        text2.clear()
 
 def fe_button_toggled(self):
     if self.feSenoide_button.isChecked():
@@ -75,13 +80,13 @@ def fe_button_toggled(self):
         self.feAmplitud_text.setVisible(True)
         self.feAmplitud_text.setValue(0)
         self.feAmplitud_box.setVisible(True)
-        self.feAmplitud_box.setCurrentIndex(-1)
+        self.feAmplitud_box.setCurrentIndex(2)
 
         self.feFrecuencia_label.setVisible(True)
         self.feFrecuencia_text.setVisible(True)
         self.feFrecuencia_text.setValue(0)
         self.feFrecuencia_box.setVisible(True)
-        self.feFrecuencia_box.setCurrentIndex(-1)
+        self.feFrecuencia_box.setCurrentIndex(0)
 
 
 
@@ -92,7 +97,7 @@ def fe_button_toggled(self):
         self.feAmplitud_text.setVisible(True)
         self.feAmplitud_text.setValue(0)
         self.feAmplitud_box.setVisible(True)
-        self.feAmplitud_box.setCurrentIndex(-1)
+        self.feAmplitud_box.setCurrentIndex(2)
     
     elif self.fePulso_button.isChecked():
         print("pulso")
@@ -101,23 +106,68 @@ def fe_button_toggled(self):
         self.feAmplitud_text.setVisible(True)
         self.feAmplitud_text.setValue(0)
         self.feAmplitud_box.setVisible(True)
-        self.feAmplitud_box.setCurrentIndex(-1)
+        self.feAmplitud_box.setCurrentIndex(2)
 
         self.feFrecuencia_label.setVisible(True)
         self.feFrecuencia_text.setVisible(True)
         self.feFrecuencia_text.setValue(0)
         self.feFrecuencia_box.setVisible(True)
-        self.feFrecuencia_box.setCurrentIndex(-1)
+        self.feFrecuencia_box.setCurrentIndex(0)
+    
+    elif self.feTriangular_button.isChecked():
+        print("triangular")
+        clear_fe(self)
+
+        self.feAmplitud_label.setVisible(True)
+        self.feAmplitud_text.setVisible(True)
+        self.feAmplitud_text.setValue(0)
+        self.feAmplitud_box.setVisible(True)
+        self.feAmplitud_box.setCurrentIndex(2)
+
+        self.feFrecuencia_label.setVisible(True)
+        self.feFrecuencia_text.setVisible(True)
+        self.feFrecuencia_text.setValue(0)
+        self.feFrecuencia_box.setVisible(True)
+        self.feFrecuencia_box.setCurrentIndex(0)
+
+    elif self.feExponencial_button.isChecked():
+        print("exponencial")
+        clear_fe(self)
+
+        self.feAmplitud_label.setVisible(True)
+        self.feAmplitud_text.setVisible(True)
+        self.feAmplitud_text.setValue(0)
+        self.feAmplitud_box.setVisible(True)
+        self.feAmplitud_box.setCurrentIndex(2)
+
+        self.feFrecuencia_label.setVisible(True)
+        self.feFrecuencia_text.setVisible(True)
+        self.feFrecuencia_text.setValue(0)
+        self.feFrecuencia_box.setVisible(True)
+        self.feFrecuencia_box.setCurrentIndex(0)
+
+    elif self.feImpulso_button.isChecked():
+        print("impulso")
+        
+        clear_fe(self)
+        self.feAmplitud_label.setVisible(True)
+        self.feAmplitud_text.setVisible(True)
+        self.feAmplitud_text.setValue(0)
+        self.feAmplitud_box.setVisible(True)
+        self.feAmplitud_box.setCurrentIndex(2)
+
+
+
     
 def clear_fe(self):
         self.feAmplitud_label.setVisible(False)
         self.feAmplitud_text.setVisible(False)
         self.feAmplitud_text.setValue(0)
         self.feAmplitud_box.setVisible(False)
-        self.feAmplitud_box.setCurrentIndex(-1)
+        self.feAmplitud_box.setCurrentIndex(2)
 
         self.feFrecuencia_label.setVisible(False)
         self.feFrecuencia_text.setVisible(False)
         self.feFrecuencia_text.setValue(0)
         self.feFrecuencia_box.setVisible(False)
-        self.feFrecuencia_box.setCurrentIndex(-1)
+        self.feFrecuencia_box.setCurrentIndex(0)
