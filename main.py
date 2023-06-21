@@ -4,8 +4,10 @@ from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import uic
 import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from gui import Ui_MainWindow
 
 from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
+
 
 
 import gui_functions as gf
@@ -19,11 +21,12 @@ app: QApplication = QApplication([])  # Start the application
 print("Application started")
 
 
-class gui(QMainWindow):
+class App(QMainWindow, Ui_MainWindow):
 
-    def __init__(self):
-        super().__init__()
-        uic.loadUi("gui.ui", self)
+    def __init__(self, parent=None):
+        super(App, self).__init__(parent)
+        self.setupUi(self)
+
 
         self.setWindowTitle("Simulador de filtros")
         self.setWindowIcon(QIcon("logo.png"))
@@ -96,7 +99,8 @@ class gui(QMainWindow):
 
 def main():
     app = QApplication([])
-    window = gui()
+    window = App()
+    window.show()
     app.exec_()
 
 if __name__ == "__main__":
