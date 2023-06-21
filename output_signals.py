@@ -37,7 +37,7 @@ class salida:
 
 
 
-def test(self):
+def processEntry(self):
     # Datos de entrada
     tiempo_entrada = isig.input_signal.tt  # Vector de tiempo de la entrada
     valores_entrada = isig.input_signal.st  # Valores de la entrada en esos momentos
@@ -65,7 +65,9 @@ def test(self):
     #Obtengo el tipo de filtro de primer orden
     if self.primerOrden_button.isChecked():
 
-        ganancia =  float(self.ganancia_primerOrden_spinBox.value())
+        ganancia = float(self.ganancia_primerOrden_spinBox.value())
+        if (self.primerOrden_Db_button.isChecked()):
+            ganancia =  10**(ganancia/20)
         
         frecuencia = float(self.f0_spinBox.value()) * (10 ** (3*Fscale))
 
@@ -87,15 +89,24 @@ def test(self):
 
     #Obtengo el tipo de filtro de segundo orden
     elif self.segundoOrden_button.isChecked():
-
+        
         ganancia = float(self.ganancia_segundoOrden_spinBox.value())
+        
+        if self.segundoOrden_Db_button.isChecked():
+            ganancia = 10**(ganancia/20) 
+
         w0 = float(self.w0_spinBox.value()) * (10 ** (3*Wscale))
         xi = float(self.xi_spinBox.value())
+
+        ganancia_banda_pasante = 0
+        if(self.gananciaMaxima_button.isChecked()):
+            ganancia_banda_pasante = 1
+
 
         segundoOrden_index = self.segundoOrden_box.currentIndex()
 
         if w0 != 0 and ganancia != 0 and xi != 0:
-            segundoOrden_filter = ff.FilterSecondOrder(w0, ganancia, xi)
+            segundoOrden_filter = ff.FilterSecondOrder(w0, ganancia, xi, ganancia_banda_pasante)
 
             if segundoOrden_index == segundoOrden_filtros.S_PASABAJOS.value:
                 w0, mag, phase, numerador_transferencia, denominador_transferencia = segundoOrden_filter.fun_pb2()
@@ -117,9 +128,6 @@ def test(self):
     elif self.ordenSuperior_button.isChecked():
         num_string = self.numerador_text.text()
         den_string = self.denominador_text.text()
-        
-        print(num_string)
-        print(den_string)
 
         if num_string != "" and den_string != "" and num_string != None and den_string != None:
             ordenSuperior_filter = ff.FilterCustom(num_string, den_string)
@@ -132,21 +140,13 @@ def test(self):
     # Obtengo la transferencia del sistema
     # Salida del sistema
     if self.primerOrden_button.isChecked() or self.segundoOrden_button.isChecked() or self.ordenSuperior_button.isChecked() :
-        print("Calculating transfer function")
-        print("Numerador:", numerador_transferencia)
-        print("Denominador:", denominador_transferencia)
-        
-        
         if numerador_transferencia != [] and denominador_transferencia != [] and valores_entrada != [] and tiempo_entrada != []:
             lti = signal.lti(numerador_transferencia, denominador_transferencia)  # Creo el sistema
             tiempo_salida, datos_salida, x = signal.lsim(lti, valores_entrada, tiempo_entrada)  # Obtengo la salida del sistema
 
             # Grafico la salida
-            self.MplWidget.axes_output.clear()
-            self.MplWidget.axes_output.plot(tiempo_salida, datos_salida, color = "orange")
-            self.MplWidget.axes_output.legend("Salida", loc='upper left', shadow=True, fontsize='small', frameon=False)
-            self.MplWidget.axes_output.set_xlabel('Tiempo [s]')
-            # self.MplWidget.axes_output.set_ylabel('Tensión [V]')
+            self.MplWidget.canvas.axes.plot(tiempo_salida, datos_salida, color = "orange", label="Salida")
+            self.MplWidget.canvas.axes.set_xlabel('Tiempo [s]')
             self.MplWidget.canvas.draw()
 
             #Grafico 

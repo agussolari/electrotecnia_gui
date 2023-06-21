@@ -74,7 +74,6 @@ def filtro_box_toggle(self, button, label1, label2 , text1, text2):
 
 def fe_button_toggled(self):
     if self.feSenoide_button.isChecked():
-        print("senoide")
         clear_fe(self)
         self.feAmplitud_label.setVisible(True)
         self.feAmplitud_text.setVisible(True)
@@ -91,7 +90,6 @@ def fe_button_toggled(self):
 
 
     elif self.feEscalon_button.isChecked():
-        print("escalon")
         clear_fe(self)
         self.feAmplitud_label.setVisible(True)
         self.feAmplitud_text.setVisible(True)
@@ -100,7 +98,6 @@ def fe_button_toggled(self):
         self.feAmplitud_box.setCurrentIndex(2)
     
     elif self.fePulso_button.isChecked():
-        print("pulso")
         clear_fe(self)
         self.feAmplitud_label.setVisible(True)
         self.feAmplitud_text.setVisible(True)
@@ -113,9 +110,13 @@ def fe_button_toggled(self):
         self.feFrecuencia_text.setValue(0)
         self.feFrecuencia_box.setVisible(True)
         self.feFrecuencia_box.setCurrentIndex(0)
+
+        self.duty_label.setVisible(True)
+        self.duty_spinBox.setVisible(True)
+        self.duty_spinBox.setValue(0.5)
+
     
     elif self.feTriangular_button.isChecked():
-        print("triangular")
         clear_fe(self)
 
         self.feAmplitud_label.setVisible(True)
@@ -131,7 +132,6 @@ def fe_button_toggled(self):
         self.feFrecuencia_box.setCurrentIndex(0)
 
     elif self.feExponencial_button.isChecked():
-        print("exponencial")
         clear_fe(self)
 
         self.feAmplitud_label.setVisible(True)
@@ -147,7 +147,6 @@ def fe_button_toggled(self):
         self.feFrecuencia_box.setCurrentIndex(0)
 
     elif self.feImpulso_button.isChecked():
-        print("impulso")
         
         clear_fe(self)
         self.feAmplitud_label.setVisible(True)
@@ -171,3 +170,7 @@ def clear_fe(self):
         self.feFrecuencia_text.setValue(0)
         self.feFrecuencia_box.setVisible(False)
         self.feFrecuencia_box.setCurrentIndex(0)
+
+        self.duty_label.setVisible(False)
+        self.duty_spinBox.setVisible(False)
+    

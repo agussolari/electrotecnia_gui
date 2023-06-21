@@ -27,7 +27,7 @@ class gui(QMainWindow):
 
         self.setWindowTitle("Simulador de filtros")
         self.setWindowIcon(QIcon("logo.png"))
-        # self.setFixedSize(1200, 850)        
+        self.setFixedSize(1200, 850)        
 
         self.show()
 
@@ -80,7 +80,13 @@ class gui(QMainWindow):
         self.w0_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
         self.w0_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
         self.ganancia_segundoOrden_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.gananciaPasante_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+        self.gananciaMaxima_button.toggled.connect(lambda: fplt.generate_input_signal(self))
         self.xi_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+        self.primerOrden_Db_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+        self.segundoOrden_Db_button.toggled.connect(lambda: fplt.generate_input_signal(self))
+        self.duty_spinBox.valueChanged.connect(lambda: fplt.generate_input_signal(self))
+        
             #Escala entrada
         self.feAmplitud_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))
         self.feFrecuencia_box.currentIndexChanged.connect(lambda: fplt.generate_input_signal(self))

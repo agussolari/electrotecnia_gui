@@ -31,12 +31,15 @@ class FilterFirstOrder:
     
 
 class FilterSecondOrder:
-    def __init__(self, frecuencia, ganancia, epsilon):
+    def __init__(self, frecuencia, ganancia, xi, gan_banda_pasante):
         self.wo = frecuencia
         self.gan = ganancia
-        self.z = epsilon
+        self.z = xi
+        self.gan_banda_pasante = gan_banda_pasante
 
     def fun_pb2(self):
+        if(self.gan_banda_pasante):
+            self.gan = 2 * self.z * self.gan
         num = [self.gan]
         den = [(1/(self.wo**2)), (2*self.z/self.wo), 1]
         sys = signal.TransferFunction(num, den)
@@ -44,6 +47,8 @@ class FilterSecondOrder:
         return w, mag, phase, num, den
 
     def fun_pa2(self):
+        if(self.gan_banda_pasante):
+            self.gan = 2 * self.z * self.gan
         num = [self.gan,0,0]
         den = [1, (2*self.z*self.wo), (self.wo**2)]
         sys = signal.TransferFunction(num, den)
@@ -147,8 +152,7 @@ class FilterCustom:
     def fun_custom(self):
         if (self.num != [] and self.den != []) or (self.num != None and self.den != None):
             if(len(self.den)>=len(self.num)):
-                print("custon num:", self.num)
-                print("custom den:",self.den)
+
             
                 num_float = list(map(float, self.num))
                 den_float = list(map(float, self.den))
